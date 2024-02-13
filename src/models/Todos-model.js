@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose")
 
-
-const schema = new mongoose.Schema({
+const ToDosSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -24,9 +23,9 @@ const schema = new mongoose.Schema({
     }
 }, {
     timestamps: true
-});
+})
 
-const model = mongoose.model( 'ToDos', schema );
+const ToDos = mongoose.model('ToDos', ToDosSchema)
 
+module.exports = ToDos
 
-module.exports = { schema, model };

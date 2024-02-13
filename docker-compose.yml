@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  todo-server:
+    build: .  # Assuming your Dockerfile is in the current directory
+    ports:
+      - "3000:5000"  # Maps port 3000 on the host to port 5000 in the container
+    env_file:
+      - ./.env
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017/todo-app  # Override if needed, or set this in your .env file
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"  # Optional: Expose MongoDB port on the host for direct access/debugging
+
+volumes:
+  mongo-data:  # Named volume to persist MongoDB data

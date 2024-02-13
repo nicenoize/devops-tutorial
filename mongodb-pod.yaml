@@ -17,7 +17,7 @@ spec:
     - "--bind_ip"
     - "0.0.0.0"
     ports:
-    - containerPort: 8000
+    - containerPort: 27017
     volumeMounts:
     - name: todo-mongo-vol
       mountPath: /data/db

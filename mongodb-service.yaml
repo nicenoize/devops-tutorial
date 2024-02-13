@@ -6,7 +6,7 @@ metadata:
   name: todo-mongo-service
 spec:
   ports:
-    - port: 8000
-      targetPort: 8000
+    - port: 27017
+      targetPort: 27017
   selector:
     app: todo-mongodb

@@ -16,7 +16,7 @@ spec:
       - image: todo-server-kubernetes-app:latest
         name: container1
         ports:
-        - containerPort: 8000
+        - containerPort: 5000
         imagePullPolicy: IfNotPresent
         envFrom:
         - configMapRef:
