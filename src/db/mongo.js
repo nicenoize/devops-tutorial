@@ -11,7 +11,7 @@ const CONNECTION_EVENTS = [
 if( process.env.NODE_ENV === 'production' ){
     CONNECTION_EVENTS.forEach(( eventName )=>{
         return mongoose.connection.on( eventName, ()=>{
-            console.log( `DB connection state changed to: ${ eventName }` );
+            console.log( `Connection state changed to: ${ eventName }` );
         });
     });
 }
@@ -20,9 +20,13 @@ if( process.env.NODE_ENV === 'production' ){
 const mongooseInstance_ = mongoose.connect(
     process.env.MONGODB_URL,
     {
-        keepAlive: true,
-        keepAliveInitialDelay: 300000,  // 1 sec * 300 = 5 min
-        connectTimeoutMS: 1000 * 10     // 1 sec * 10
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+
+        useUnifiedTopology: true,
+        heartbeatFrequencyMS: 1000 * 5,         // 1 sec * 5
+        serverSelectionTimeoutMS: 1000 * 10     // 1 sec * 10
     }
 );
 
@@ -32,8 +36,13 @@ mongooseInstance_
     })
     .catch(( err )=>{
         console.error( `Cannot connect to database: ${ process.env.MONGODB_URL }` );
-        console.error( err );
     });
+
+
+process.on( 'exit', async ()=>{
+    const dbClient = await mongooseInstance_;
+    dbClient.disconnect();
+});
 
 
 module.exports = mongooseInstance_;

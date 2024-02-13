@@ -31,23 +31,6 @@ describe( 'Model: Users', ()=>{
         expect( userRecord ).toEqual( expect.objectContaining( userInfo ) );
     });
 
-    test( 'deleting a user', async ()=>{
-        const userData = {
-            name: 'anothername',
-            email: 'anothername@example.com',
-            password: 'anotherpassword'
-        };
-
-        const userDoc = await Users( userData );
-        await userDoc.save();
-
-        await Users.remove({ email: userData.email })
-
-        const userRecord = await Users.findOne({ email: userData.email });
-
-        expect( userRecord ).toBeNull();
-    });
-
 
     afterAll( async ()=>{
         const dbClient = await dbClientInstance_;

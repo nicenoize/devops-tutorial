@@ -1,5 +1,6 @@
+require('dotenv').config();
+
 const path = require( 'path' );
-const http = require( 'http' );
 
 const express = require('express');
 const cors = require('cors');
@@ -44,25 +45,16 @@ app.use(errorRoutes);
 
 
 (async function main(){
-    process.on( 'exit', async ()=>{
-        const dbClient = await dbClientInstance_;
-        await dbClient.disconnect();
-    });
-
     try{
-        const server = http.createServer( app );
         await new Promise( (__ful, rej__ )=>{
-            server.listen( port, ()=>{
-                console.log( `ToDo server is up & bound to port ${ port }` );
+            app.listen(port, function(){
+                console.log( `ToDo server is up on port ${ port }`);
                 __ful();
-            }).on( 'error', rej__ );
+            }).on( 'error', rej__);
         });
 
         process.on( 'SIGINT', ()=>{
-            server.close( ()=>{
-                console.log( 'Shutting down ToDo server' );
-            });
-            process.exit( 0 );
+            process.exit( 2 );
         });
     }catch( err ){
         console.error( err );
