@@ -4,8 +4,10 @@ metadata:
   name: todo-pvc
 spec:
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 1G
-  storageClassName: ""
+  # Optional: Specify a storageClassName if you need a specific type of storage.
+  # For GKE Autopilot, the default is typically fine and dynamically provisions a GCE Persistent Disk.
+  # storageClassName: "standard-rwo" # Uncomment if you need a specific storage class
